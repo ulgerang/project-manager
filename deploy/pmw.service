@@ -1,0 +1,20 @@
+[Unit]
+Description=Project Manager service
+After=network-online.target tailscaled.service
+Wants=network-online.target
+[Service]
+User=pmw
+Group=pmw
+EnvironmentFile=/etc/project-manager.env
+ExecStart=/opt/project-manager/.venv/bin/pmw-server
+WorkingDirectory=/var/lib/pmw
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/pmw
+UMask=0077
+[Install]
+WantedBy=multi-user.target

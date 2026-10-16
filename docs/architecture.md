@@ -1,6 +1,13 @@
 # Architecture and contracts
 
-Status: proposed contracts; implementation and technology selection are pending.
+Status: 0.1 vertical slice implemented; remaining gaps are tracked in the README.
+
+## Implemented stack decision
+
+- **Python 3.11+, FastAPI, Uvicorn** keep the authenticated HTTP contract small, typed, and easy to operate as one systemd process. The CLI deliberately uses Python's standard HTTP library, so installing the service also installs a client without another runtime.
+- **SQLite (WAL)** fits a personal seven-project workspace, provides transactions for entity plus activity writes, portable backup, and durable state without another daemon. A write transaction also serializes revision and idempotency checks. A future multi-user/high-write release should reassess PostgreSQL.
+- **Framework-free HTML/CSS/JavaScript** keeps the dashboard and compact route one deployable artifact. It polls an authenticated snapshot every three seconds; this is live refresh without page reload, though push synchronization remains roadmap work.
+- **pywebview (optional)** reuses the responsive dashboard in a small always-on-top Windows window instead of maintaining a second UI. Native Windows behavior remains unverified on Linux.
 
 ## Boundaries
 

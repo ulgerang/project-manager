@@ -1,6 +1,6 @@
 # Delivery roadmap
 
-No application milestone is implemented yet. GitHub issues track execution.
+An initial runnable vertical slice now spans all five stages. It is not a completed release: see the README's explicit remaining acceptance gaps. The stages below remain the direction for hardening.
 
 ## 1. Central service and persistence
 
