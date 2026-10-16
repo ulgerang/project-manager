@@ -17,7 +17,7 @@ The service runs on an always-on host reachable over Tailscale. A project locati
 
 ## Entities
 
-- Project: stable ID, name, location, lifecycle state, current summary, display order, revision, update time.
+- Project: stable ID, name, location, lifecycle state, user summary, AI summary, display order, revision, update time, optional deletion time.
 - Task: stable ID, project ID, title, details, state, priority, actor, blocking reason, revision.
 - Note: stable ID, project ID, text, author, revision.
 - Activity: stable ID, project ID, related entity ID, event type, actor label, authenticated client ID, occurrence time, receipt time, summary.
@@ -32,6 +32,16 @@ Store timestamps in UTC; render and filter dates in the user's timezone. Use ser
 - Keep human notes separate from replaceable status summaries.
 - Persist history and support explicit corrections instead of silently rewriting past events.
 - Use authenticated clients with revocable credentials; actor labels are descriptive, not an authorization mechanism.
+
+## Project status, ordering, and deletion
+
+`user_summary` is the independent human status. `ai_summary` is the response alias of the legacy `summary` column. Existing CLI status updates with `actor=codex` or `actor=claude-code` continue to change only the AI channel. Explicit `actor=human` legacy updates go to the human channel. Agent-labelled requests to write `user_summary` are rejected; actor labels remain client assertions under the existing shared credential design, not separate user/agent security identities.
+
+Startup adds `user_summary` and `deleted_at` to older databases in one transaction. Legacy summaries remain in the AI channel unless the latest legacy project activity unambiguously identifies a human status write (or human project creation). In that case the summary moves into the human channel once. Text and activity are preserved. Back up before upgrading; rolling back to an older binary requires restoring its matching DB backup.
+
+`POST /api/projects/reorder` accepts the complete active project list with each expected revision. A changed revision, added/deleted project, or duplicate ID rejects the operation before any update. Changed positions and activity commit together. Status changes can cause a reorder conflict, in which case the UI refreshes and the user retries.
+
+`DELETE /api/projects/{id}` requires an expected revision and an idempotency key. It soft-deletes the record and appends activity atomically. Default snapshots/history exclude deleted projects and their children. Their persisted notes, tasks, and activities remain intact; writes to deleted projects are rejected. There is no undelete UI yet, and no filesystem operation runs when a project is deleted.
 
 ## Synchronization and offline behavior
 

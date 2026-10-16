@@ -5,8 +5,9 @@
 <main>
   <section id="login" class="card"><h2>서비스 연결</h2><p>서버에서 설정한 접근 토큰을 입력하세요. 이 브라우저에만 저장됩니다.</p><form id="login-form"><input id="token" type="password" required placeholder="Access token"><button>연결</button></form></section>
   <section id="app" hidden>
-    <div class="toolbar"><div><strong id="count">0개 프로젝트</strong><small>표시 순서는 고정됩니다</small></div><label>기록 날짜 <input id="date" type="date"></label><label class="check"><input id="attention" type="checkbox"> 확인 필요만</label><button id="add-project">+ 프로젝트</button><button id="logout" class="ghost">연결 해제</button></div>
+    <div class="toolbar"><div><strong id="count">0개 프로젝트</strong><small>⠿ 드래그로 순서 변경</small></div><label>기록 날짜 <input id="date" type="date"></label><label class="check"><input id="attention" type="checkbox"> 확인 필요만</label><button id="add-project">+ 프로젝트</button><button id="logout" class="ghost">연결 해제</button></div>
+    <p id="message" role="status" aria-live="polite"></p>
     <div id="projects" aria-live="polite"></div>
   </section>
-</main><template id="project-template"><article class="project"><button class="row" aria-expanded="false"><span class="chevron">›</span><span><strong class="name"></strong><small class="location"></small></span><span class="summary"></span><span class="badge"></span><time></time></button><div class="details" hidden></div></article></template>
+</main><template id="project-template"><article class="project"><div class="project-heading"><button class="drag-handle" draggable="true" aria-label="프로젝트 순서 드래그" title="드래그해서 순서 변경">⠿</button><button class="row" aria-expanded="false"><span class="chevron">›</span><span><strong class="name"></strong><small class="location"></small></span><span class="summary"></span><span class="ai-summary"></span><span class="badge"></span><time></time></button></div><div class="details" hidden></div></article></template>
 <script src="/static/app.js"></script></body></html>
