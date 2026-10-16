@@ -4,9 +4,9 @@
 .compact .row{grid-template-columns:12px minmax(0,1fr) 48px;grid-template-areas:"arrow name badge" "arrow summary summary";column-gap:8px;row-gap:4px;padding:10px 8px;font-size:12px}
 .compact .row .chevron{grid-area:arrow}
 .compact .row>span:nth-child(2){grid-area:name;min-width:0}
-.compact .row .summary{grid-area:summary;display:block;min-width:0;white-space:normal;overflow:visible;overflow-wrap:anywhere;text-overflow:clip;font-weight:400}
+.compact .row .summary{grid-area:summary;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;min-width:0;min-height:3em;line-height:1.5;white-space:pre-wrap;overflow:hidden;overflow-wrap:anywhere;font-weight:400}
 .compact .row .location{display:none}
-.compact .row .name{display:block;overflow:visible;white-space:normal;overflow-wrap:anywhere;text-overflow:clip;font-size:13px}
+.compact .row .name{display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:13px}
 .compact .row .badge{grid-area:badge;align-self:start;font-size:10px;padding:2px}
 .compact .sync{font-size:10px}
 .compact .toolbar{display:flex;flex-wrap:wrap;padding:8px;gap:6px;font-size:11px}
@@ -14,3 +14,5 @@
 .compact .toolbar input{max-width:125px;padding:3px}
 .compact .toolbar button{font-size:10px;padding:4px}
 .compact .toolbar>div{width:auto;margin-right:auto}
+.status-detail{grid-column:1/-1;min-width:0}
+.status-text{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
